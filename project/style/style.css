@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  background-color: gray;
+}
+
+header .cart-button {
+  position: absolute;
+  right: 20px;
+  padding: 5px;
+}
+
+main {
+  margin: 20px auto;
+  width: 600px;
+}
+
+main .goods-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+main .goods-list .goods-item {
+  border: 1px solid black;
+  padding: 20px;
+}
+
+main .goods-list .goods-item p {
+  padding-top: 5px;
+}
+/*# sourceMappingURL=style.css.map */
