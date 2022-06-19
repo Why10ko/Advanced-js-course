@@ -1,44 +1,52 @@
 * {
-  margin: 0;
   padding: 0;
+  margin: 0;
+}
+
+body {
+  display: grid;
+  grid-template-rows: max-content auto;
+  gap: 40px;
 }
 
 header {
   height: 100px;
+  display: grid;
+  grid-template-columns: auto max-content max-content;
   background-color: black;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
 }
 
-header .nameOfShop {
+.title {
   color: white;
+  padding: 10px;
 }
 
-header .cart-button {
-  padding: 15px;
-  font-size: 18px;
+.actions,
+.search {
+  padding: 10px;
+}
+
+button {
+  padding: 10px
 }
 
 .goods-list {
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 40px
 }
 
-.goods-list .goods-item {
+.goods-item {
   width: 200px;
-  height: 200px;
+  height: 300px;
   padding: 10px;
   box-sizing: border-box;
-  border: 1px solid black;
+  outline: 1px solid black;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
-.goods-list .goods-item h3 {
-  margin-bottom: 10px;
+.goods-search {
+  height: 36px
 }
-/*# sourceMappingURL=style.css.map */

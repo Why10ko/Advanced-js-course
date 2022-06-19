@@ -1,21 +1,17 @@
 const goods = [
-  { product_name: 'Shirt', price: 150 },
-  { product_name: 'Socks', price: 50 },
-  { product_name: 'Jacket', price: 350 },
-  { product_name: 'Shoes', price: 250 },
+  { title: 'Shirt', price: 150 },
+  { title: 'Socks', price: 50 },
+  { title: 'Jacket', price: 350 },
+  { title: 'Shoes', price: 250 },
 ];
 
 const BASE_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
 const GET_GOODS_ITEMS = `${BASE_URL}catalogData.json`
 const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`
 
-function service(url, callback) {
-  xhr = new XMLHttpRequest();
-  xhr.open('GET', url);
-  xhr.send();
-  xhr.onload = () => {
-    callback(JSON.parse(xhr.response));
-  }
+function service(url) {
+  return fetch(url)
+    .then((res) => res.json())
 }
 
 class GoodsItem {
@@ -35,20 +31,25 @@ class GoodsItem {
 
 class GoodsList {
   items = [];
+  filteredItems = []
   fetchGoods(callback) {
-    service(GET_GOODS_ITEMS, (data) => {
+    return service(GET_GOODS_ITEMS).then((data) => {
       this.items = data;
-      callback();
+      this.filteredItems = data;
     });
   }
-  getPrice() {
-    return this.items.reduce(
-      function (sum, items) {
-        return sum + items.price;
-      }, 0);
+  filterItems(value) {
+    this.filteredItems = this.items.filter(({ product_name }) => {
+      return product_name.match(new RegExp(value, 'gui'))
+    })
+  }
+  calculatePrice() {
+    return this.items.reduce((prev, { price }) => {
+      return prev + price;
+    }, 0)
   }
   render() {
-    const goods = this.items.map(item => {
+    const goods = this.filteredItems.map(item => {
       const goodItem = new GoodsItem(item);
       return goodItem.render()
     }).join('');
@@ -60,16 +61,22 @@ class GoodsList {
 class BasketGoodsList {
   items = [];
   fetchGoods() {
-    service(GET_BASKET_GOODS_ITEMS, (data) => {
+    return service(GET_BASKET_GOODS_ITEMS).then((data) => {
       this.items = data.contents;
     });
   }
 }
 
 const goodsList = new GoodsList();
-goodsList.fetchGoods(() => {
+goodsList.fetchGoods().then(() => {
   goodsList.render();
 });
 
 const basketGoodsList = new BasketGoodsList();
 basketGoodsList.fetchGoods();
+
+document.getElementsByClassName('search-button')[0].addEventListener('click', () => {
+  const value = document.getElementsByClassName('goods-search')[0].value;
+  goodsList.filterItems(value);
+  goodsList.render();
+})
