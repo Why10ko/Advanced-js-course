@@ -5,24 +5,42 @@
    <meta charset="UTF-8">
    <title>Not Yandex market</title>
    <link rel="stylesheet" href="style/style.css">
+   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+   <script src="script.js"></script>
 </head>
 
 <body>
-   <header>
-      <h1 class="title">eShop</h1>
-
-      <div class="search">
-         <input type="text" class="goods-search" />
-         <button class="search-button" type="button">Искать</button>
+   <div id="root">
+      <header>
+         <h1 class="title">eShop</h1>
+         <div class="search">
+            <input type="text" class="goods-search" v-model="search" />
+            <button class="search-button" type="button" v-on:click="filterItems">Искать</button>
+         </div>
+         <div class="actions">
+            <button class="cart-button" type="button" v-on:click="setVisionCart">Корзина</button>
+         </div>
+      </header>
+      <main>
+         <div class="goods-list">
+            <div class="goods-item" v-for="item in filteredItems">
+               <h3>{{ item.product_name }}</h3>
+               <p>{{ item.price }}</p>
+            </div>
+         </div>
+      </main>
+      <div class="fixed-area" v-if="isVisibleCart">
+         <div class="basket-card">
+            <div class="basket-card__header">
+               <h1 class="basket-card__header__title">basket card</h1>
+               <div class="basket-card__header__delete-icon" v-on:click="setVisionCart"></div>
+            </div>
+            <div class="basket-card__content">
+               content
+            </div>
+         </div>
       </div>
-      <div class="actions">
-         <button class="cart-button" type="button">Корзина</button>
-      </div>
-   </header>
-   <main>
-      <div class="goods-list"></div>
-   </main>
-   <script src="script.js"></script>
+   </div>
 </body>
 
 </html>
