@@ -88,7 +88,7 @@ button {
 }
 
 .basket-card__header__delete-icon {
-  background-image: url("../img/delete_icon.png");
+  background-image: url("./img/delete_icon.png");
   background-size: contain;
   width: 30px;
   height: 30px;

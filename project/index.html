@@ -3,8 +3,8 @@
 
 <head>
    <meta charset="UTF-8">
-   <title>Not Yandex market</title>
-   <link rel="stylesheet" href="style/style.css">
+   <title>eShop</title>
+   <link rel="stylesheet" href="style.css">
    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
    <script src="script.js"></script>
 </head>
@@ -13,18 +13,18 @@
    <div id="root">
       <header>
          <h1 class="title">eShop</h1>
-         <search :value="search" @input="searchChangehandler">
-         </search>
+         <search :value="search" @input="searchChangeHandler"></search>
          <div class="actions">
-            <custom-button v-on:click="setVisionCart">Корзина</custom-button>
+            <custom-button v-on:click="setVisionCard">Корзина</custom-button>
          </div>
       </header>
       <main>
          <div class="goods-list">
-            <goods-item v-for="item in filteredItems" :item="item"></goods-item>
+            <goods-item v-for="item in filteredItems" v-bind:item="item"></goods-item>
          </div>
       </main>
-      <basket-goods :isVisibleCart="isVisibleCart" v-on:closecart="setVisionCart"></basket-goods>
+      <basket-goods v-if="cardIsVision" v-on:closeclick="setVisionCard"></basket-goods>
+
    </div>
 </body>
 
