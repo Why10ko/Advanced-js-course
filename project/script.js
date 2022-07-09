@@ -1,5 +1,7 @@
 const BASE_URL = 'http://localhost:8000/';
-const GET_GOODS_ITEMS = `${BASE_URL}goods`
+const GET_GOODS_ITEMS = `${BASE_URL}goods`;
+const GET_BASKET_GOODS_ITEMS = `${BASE_URL}basketgoods`;
+
 // const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`
 
 function service(url) {
@@ -7,9 +9,23 @@ function service(url) {
     .then((res) => res.json())
 }
 
+function servicePost(url, body) {
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify(body)
+  })
+}
 
 function init() {
   const Search = Vue.component('search', {
+
+    model: {
+      prop: 'value',
+      event: 'input'
+    },
     props: [
       'value'
     ],
@@ -64,13 +80,17 @@ function init() {
                ></div>
             </div>
             <div class="basket-card__content">
-               content
+               <basket-item class="basket-item_class"
+               v-for="item in basketGoodsItems" :item="item"
+               ></basket-item>  
             </div>
          </div>
       </div>
     `,
     mounted() {
-
+      service(GET_BASKET_GOODS_ITEMS).then((basketGoods) => {
+        this.basketGoodsItems = basketGoods
+      })
     }
   })
 
@@ -82,6 +102,7 @@ function init() {
       <div class="goods-item">
          <h3>{{ item.product_name }}</h3>
          <p>{{ item.price }}</p>
+         <custom-button @click="$emit('addgood', item.id)">Добавить</custom-button>
       </div>
     `
   })
@@ -103,9 +124,10 @@ function init() {
           this.filteredItems = data;
         });
       },
-
-      searchChangeHandler(value) {
-        this.search = value;
+      addGood(goodId) {
+        servicePost(GET_BASKET_GOODS_ITEMS, {
+          id: goodId,
+        })
       }
     },
     computed: {

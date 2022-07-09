@@ -13,14 +13,14 @@
    <div id="root">
       <header>
          <h1 class="title">eShop</h1>
-         <search :value="search" @input="searchChangeHandler"></search>
+         <search :value="search"></search>
          <div class="actions">
             <custom-button v-on:click="setVisionCard">Корзина</custom-button>
          </div>
       </header>
       <main>
          <div class="goods-list">
-            <goods-item v-for="item in filteredItems" v-bind:item="item"></goods-item>
+            <goods-item v-for="item in filteredItems" v-bind:item="item" @addgood="addGood"></goods-item>
          </div>
       </main>
       <basket-goods v-if="cardIsVision" v-on:closeclick="setVisionCard"></basket-goods>

@@ -99,3 +99,10 @@ button {
 .basket-card__content {
   padding: 10px;
 }
+
+.basket-item_class {
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  margin: 5px auto;
+}
