@@ -1,41 +1,14 @@
-const BASE_URL = 'http://localhost:8000/';
-const GET_GOODS_ITEMS = `${BASE_URL}goods`;
-const GET_BASKET_GOODS_ITEMS = `${BASE_URL}basketgoods`;
+import './style.css';
+import Search from './components/Search';
+import { service, servicePost } from './service';
+import { BASE_URL, GET_GOODS_ITEMS, GET_BASKET_GOODS_ITEMS } from './constant';
 
 // const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`
 
-function service(url) {
-  return fetch(url)
-    .then((res) => res.json())
-}
 
-function servicePost(url, body) {
-  return fetch(url, {
-    method: 'POST',
-    headers: {
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify(body)
-  })
-}
 
 function init() {
-  const Search = Vue.component('search', {
 
-    model: {
-      prop: 'value',
-      event: 'input'
-    },
-    props: [
-      'value'
-    ],
-    template: `
-    <div class="search">
-            <input type="text" class="goods-search" :value="value" @input="$emit('input', $event.target.value)"/>
-            
-         </div>
-    `
-  })
   const BasketItem = Vue.component('basket-item', {
     props: [
       'item'
